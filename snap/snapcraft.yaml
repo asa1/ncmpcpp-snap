@@ -1,0 +1,69 @@
+name: asa-ncmpcpp
+summary: Featureful ncurses based MPD client inspired by ncmpc
+license: GPL-2.0
+base: core18
+version: 0.8.2
+description: |
+  ncmpcpp – featureful ncurses based MPD client inspired by ncmpc
+
+  Unofficial snap, created primarily to use the latest ncmpcpp on older Ubuntu distros with library compatibility issues (e.g. 16.04).
+
+  ** Main features **
+  * tag editor
+  * playlist editor
+  * easy to use search engine
+  * media library
+  * music visualizer
+  * ability to fetch artist info from last.fm
+  * new display mode
+  * alternative user interface
+  * ability to browse and add files from outside of MPD music directory …and a lot more minor functions.
+
+  Official ncmpcpp project page: https://rybczak.net/ncmpcpp/
+
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict
+
+apps:
+  ncmpcpp:
+    command: bin/ncmpcpp
+    plugs:
+      - network
+
+parts:
+  ncmpcpp:
+    # See 'snapcraft plugins'
+    plugin: autotools
+    source: https://github.com/ncmpcpp/ncmpcpp
+    source-type: git
+    source-branch: 0.8.x
+    configflags:
+      - --enable-clock
+      - --enable-outputs
+      - --enable-visualizer
+      - --with-curl
+      - --with-taglib
+
+    build-packages:
+      - dh-autoreconf
+      - pkg-config
+      - make
+      - automake
+      - autoconf
+      - libtool
+      - libtag1-dev
+    stage-packages:
+      - libboost-dev
+      - libboost-filesystem-dev
+      - libboost-locale-dev
+      - libboost-program-options-dev
+      - libboost-regex-dev
+      - libboost-thread-dev
+      - libcurl4-gnutls-dev
+      - libfftw3-dev
+      - libmpdclient-dev
+      - libncursesw5-dev
+      - libreadline-dev
+      - libtag1-dev
+    organize:
+      ncmpcpp: bin/
